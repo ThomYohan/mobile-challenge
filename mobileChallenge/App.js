@@ -47,7 +47,7 @@ const App: () => Node = () => {
         // style={backgroundStyle}
       >
         <Header />
-        <View style={{flex: 1, padding: 24}}>
+        <View style={sectionContainer}>
           {isLoading ? (
             <Text>Loading...</Text>
           ) : (
@@ -58,26 +58,15 @@ const App: () => Node = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <Text style={{fontSize: 18, color: 'green', textAlign: 'center'}}>
-                {data.title}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'green',
-                  textAlign: 'center',
-                  paddingBottom: 10,
-                }}
-              >
-                Articles:
-              </Text>
-              {/* <FlatList
-                data={data.articles}
+              <Text style={sectionTitle}>Users</Text>
+              <FlatList
+                data={data.name}
                 keyExtractor={({id}, index) => id}
+                style={sectionDescription}
                 renderItem={({item}) => (
-                  <Text>{item.id + '. ' + item.title}</Text>
+                  <Text>{item.id + '. ' + item.name}</Text>
                 )}
-              /> */}
+              />
             </View>
           )}
         </View>
@@ -88,20 +77,19 @@ const App: () => Node = () => {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    flex: 1,
+    padding: 24,
   },
   sectionTitle: {
-    fontSize: 24,
+    color: 'black',
+    fontSize: 18,
     fontWeight: '600',
+    textAlign: 'center',
   },
   sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
+    fontSize: 13,
     fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    marginTop: 8,
   },
 });
 
