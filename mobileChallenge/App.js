@@ -6,15 +6,14 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {
+  FlatList,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
@@ -26,64 +25,61 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  console.log(data);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  useEffect(() => {
+    fetch('https://my.api.mockaroo.com/users.json?page=20&count=5&key=930279b0')
+      .then(response => response.json())
+      .then(json => setData(json))
+      .catch(error => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+    <SafeAreaView
+    // style={backgroundStyle}
+    >
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        // style={backgroundStyle}
+      >
         <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+        <View style={{flex: 1, padding: 24}}>
+          {isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text style={{fontSize: 18, color: 'green', textAlign: 'center'}}>
+                {data.title}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'green',
+                  textAlign: 'center',
+                  paddingBottom: 10,
+                }}
+              >
+                Articles:
+              </Text>
+              {/* <FlatList
+                data={data.articles}
+                keyExtractor={({id}, index) => id}
+                renderItem={({item}) => (
+                  <Text>{item.id + '. ' + item.title}</Text>
+                )}
+              /> */}
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
