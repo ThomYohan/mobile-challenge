@@ -39,13 +39,8 @@ const App: () => Node = () => {
   }, []);
 
   return (
-    <SafeAreaView
-    // style={backgroundStyle}
-    >
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        // style={backgroundStyle}
-      >
+    <SafeAreaView>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Header />
         <View style={sectionContainer}>
           {isLoading ? (
@@ -78,7 +73,7 @@ const App: () => Node = () => {
 const styles = StyleSheet.create({
   sectionContainer: {
     flex: 1,
-    padding: 24,
+    padding: 15,
   },
   sectionTitle: {
     color: 'black',
