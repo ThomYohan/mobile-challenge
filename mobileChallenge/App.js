@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
 import {
@@ -17,18 +9,9 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 const App: () => Node = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  console.log(data);
 
   useEffect(() => {
     fetch('https://my.api.mockaroo.com/users.json?page=20&count=5&key=930279b0')
@@ -41,18 +24,11 @@ const App: () => Node = () => {
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header />
         <View style={sectionContainer}>
           {isLoading ? (
             <Text>Loading...</Text>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
+            <View style={subSectionContainer}>
               <Text style={sectionTitle}>Users</Text>
               <FlatList
                 data={data.name}
@@ -74,6 +50,11 @@ const styles = StyleSheet.create({
   sectionContainer: {
     flex: 1,
     padding: 15,
+  },
+  subSectionContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   sectionTitle: {
     color: 'black',
